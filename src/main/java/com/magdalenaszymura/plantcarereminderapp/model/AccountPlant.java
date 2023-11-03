@@ -1,4 +1,4 @@
-package com.example.plantcarereminderapp.model;
+package com.magdalenaszymura.plantcarereminderapp.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -17,7 +17,7 @@ import java.util.List;
 public class AccountPlant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     private int quantity;
     private Date lastReminder;

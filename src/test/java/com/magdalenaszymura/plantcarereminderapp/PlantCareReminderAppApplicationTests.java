@@ -1,4 +1,4 @@
-package com.example.plantcarereminderapp;
+package com.magdalenaszymura.plantcarereminderapp;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,4 +1,4 @@
-package com.example.plantcarereminderapp.model;
+package com.magdalenaszymura.plantcarereminderapp.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,16 +11,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Plant {
+public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     private String name;
-
-    private int wateringEveryXDays;
-
-    @ManyToOne
-    @JoinColumn(name = "plantId")
-    private AccountPlant accountPlant;
 }
