@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -17,10 +19,14 @@ public class Plant {
     private Integer id;
 
     private String name;
+    private String individualName;
 
-    private int wateringEveryXDays;
+    @Column(name = "watering_frequency", nullable = false)
+    private int wateringFrequency;
 
-    @ManyToOne
-    @JoinColumn(name = "plantId")
-    private AccountPlant accountPlant;
+    private Date lastWatering;
+
+    @ManyToOne (fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_id", nullable = false)
+    private Account account;
 }

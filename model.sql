@@ -1,22 +1,18 @@
-create table plant
-(
-    id                    int primary key auto_increment,
-    name                  varchar(250),
-    watering_every_x_days int
-);
 create table account
 (
-    id   int primary key auto_increment,
-    name varchar(250)
+    id        int auto_increment primary key,
+    user_name varchar(255) not null,
+    email     varchar(255) not null unique,
+    password  varchar(255) not null,
+    createdAt timestamp default current_timestamp
 );
-create table account_plant
+
+create table plant
 (
-    id          int primary key auto_increment,
-    quantity    int,
-    account_id  int,
-    plant_id    int,
-    last_remind date,
-    next_remind date,
-    foreign key (account_id) references account (account_id),
-    foreign key (plant_id) references plant (plant_id)
-);
+    id                 int auto_increment primary key,
+    name               varchar(255) not null,
+    individual_name    varchar(255) not null unique,
+    watering_frequency int          not null,
+    last_watering      date,
+    foreign key (account_id) references account(id)
+)

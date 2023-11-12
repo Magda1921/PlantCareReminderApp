@@ -1,0 +1,1 @@
+-- INSERT INTO plant values(id, name, species, wateringFrequency, accountId);
