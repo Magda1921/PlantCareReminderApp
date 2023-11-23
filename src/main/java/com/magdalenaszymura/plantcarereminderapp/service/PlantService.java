@@ -15,4 +15,9 @@ public class PlantService {
         plant.setAccount(account);
         plantRepository.save(plant);
     }
+
+    public Plant findPlantByName(String name) {
+        Plant plant = plantRepository.getPlantByName(name);
+        return plant;
+    }
 }

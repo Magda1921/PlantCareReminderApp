@@ -11,6 +11,7 @@ public class AccountServiceTest {
     private AccountService accountService;
     private AccountRepository accountRepository;
 
+//    todo: zmienić bez beforeAll
     @BeforeAll
     public void setUp() {
         accountRepository = mock(AccountRepository.class);

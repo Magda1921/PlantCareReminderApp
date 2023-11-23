@@ -1,5 +1,7 @@
 package com.magdalenaszymura.plantcarereminderapp.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,5 +28,6 @@ public class Account {
     private String password;
 
     @OneToMany(mappedBy = "account")
-    private Set <Plant> plants;
+    @JsonManagedReference
+    private Set<Plant> plants;
 }

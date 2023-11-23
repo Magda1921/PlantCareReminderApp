@@ -49,4 +49,27 @@ public class PlantServiceTest {
 //        then
         verify(plantRepository).save(plant);
     }
+
+    @Test
+    public void test() throws Exception {
+        boolean isTrue = false;
+        if (isTrue == false) {
+
+//            unchecked exception
+//            throw new RuntimeException();
+
+//            checked exception
+            throw new Exception();
+        }
+        System.out.println("End");
+    }
+
+    @Test
+    public void test1 () {
+        try {
+            test();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -67,7 +67,7 @@ public class IntegrationTest {
         List<String> plants = plantRepository.findAll()
                 .stream()
                 .map(Plant::getName)
-                .filter(n -> "rose".equals(n))
+                .filter("rose"::equals)
                 .collect(Collectors.toList());
         assertThat(plants).hasSize(1);
     }

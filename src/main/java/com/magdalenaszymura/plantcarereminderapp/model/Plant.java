@@ -1,5 +1,8 @@
 package com.magdalenaszymura.plantcarereminderapp.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,6 +30,7 @@ public class Plant {
     private Date lastWatering;
 
     @ManyToOne (fetch = FetchType.LAZY)
+    @JsonBackReference
     @JoinColumn(name = "account_id", nullable = false)
     private Account account;
 }

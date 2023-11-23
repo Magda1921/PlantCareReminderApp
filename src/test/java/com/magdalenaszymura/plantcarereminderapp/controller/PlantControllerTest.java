@@ -98,4 +98,23 @@ public class PlantControllerTest {
         andExpect(status().is4xxClientError());
 
     }
+
+    @Test
+    public void shouldGetPlantByPlantName() {
+//        given
+        Plant plant = new Plant();
+        int id = 1;
+        String name = "rose";
+        String individualName = "rose1";
+        int wateringFrequency = 5;
+        plant.setId(id);
+        plant.setName(name);
+        plant.setWateringFrequency(wateringFrequency);
+        plant.setIndividualName(individualName);
+
+        doNothing().when(plantService).findPlantByName(name);
+//        when
+//        this.mockMvc.perform(MockMvcRequestBuilders.get("/flowers/{name}", name);
+//        then
+    }
 }
