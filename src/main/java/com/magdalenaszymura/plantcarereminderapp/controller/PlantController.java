@@ -5,6 +5,7 @@ import com.magdalenaszymura.plantcarereminderapp.model.Plant;
 import com.magdalenaszymura.plantcarereminderapp.service.AccountService;
 import com.magdalenaszymura.plantcarereminderapp.service.PlantService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,14 +16,23 @@ public class PlantController {
     private PlantService plantService;
     private AccountService accountService;
 
-    @GetMapping("/hello")
-    public String greed() {
-        return "Hello";
-    }
-
     @PostMapping("/flowers/{email}")
     void registerNewPlant(@PathVariable("email") String email, @RequestBody Plant plant) {
         Account account = accountService.getAccountByEmail(email);
         plantService.addFlower(plant, account);
     }
+
+    @GetMapping("/flowers/{name}")
+    @ResponseBody
+    ResponseEntity<Plant> findPlantByName(@PathVariable String name) {
+        Plant plant = plantService.findPlantByName(name);
+
+        if (plant != null) {
+            return ResponseEntity.ok(plant);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
 }

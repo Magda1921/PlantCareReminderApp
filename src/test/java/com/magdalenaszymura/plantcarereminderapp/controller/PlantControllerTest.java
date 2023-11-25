@@ -12,6 +12,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
@@ -97,5 +98,51 @@ public class PlantControllerTest {
 //                then
         andExpect(status().is4xxClientError());
 
+    }
+
+    @Test
+    void shouldGetPlantByPlantName() throws Exception {
+//        given
+        Plant plant = new Plant();
+        int id = 1;
+        String name = "rose";
+        String individualName = "rose1";
+        int wateringFrequency = 5;
+        plant.setId(id);
+        plant.setName(name);
+        plant.setWateringFrequency(wateringFrequency);
+        plant.setIndividualName(individualName);
+
+        given(plantService.findPlantByName(name)).willReturn(plant);
+//        when
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/flowers/{name}", name)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(plant)))
+//        then
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    void shouldReturnNotFoundIfThePlantDoesNotExist() throws Exception {
+//        given
+        Plant plant = new Plant();
+        int id = 1;
+        String name = "rose";
+        String individualName = "rose1";
+        int wateringFrequency = 5;
+        plant.setId(id);
+        plant.setName(name);
+        plant.setWateringFrequency(wateringFrequency);
+        plant.setIndividualName(individualName);
+
+        String plantName = "daisy";
+
+        given(plantService.findPlantByName(plantName)).willReturn(plant);
+//        when
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/flowers/{name}", name)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(plant)))
+//        then
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 }
