@@ -16,11 +16,6 @@ public class PlantController {
     private PlantService plantService;
     private AccountService accountService;
 
-    @GetMapping("/hello")
-    public String greed() {
-        return "Hello";
-    }
-
     @PostMapping("/flowers/{email}")
     void registerNewPlant(@PathVariable("email") String email, @RequestBody Plant plant) {
         Account account = accountService.getAccountByEmail(email);
