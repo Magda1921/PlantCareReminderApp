@@ -6,6 +6,8 @@ import com.magdalenaszymura.plantcarereminderapp.repository.PlantRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @AllArgsConstructor
 @Service
 public class PlantService {
@@ -19,5 +21,10 @@ public class PlantService {
     public Plant findPlantByName(String name) {
         Plant plant = plantRepository.getPlantByName(name);
         return plant;
+    }
+
+    public List <Plant> findPlantByWateringFrequency(int wateringFrequency) {
+        List<Plant> plants = plantRepository.getPlantByWateringFrequency(wateringFrequency);
+        return plants;
     }
 }

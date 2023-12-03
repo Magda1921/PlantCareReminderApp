@@ -14,6 +14,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.List;
+
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -105,17 +107,18 @@ public class PlantControllerTest {
 //        given
         Plant plant = new Plant();
         int id = 1;
-        String name = "rose";
+        String plantName = "rose";
         String individualName = "rose1";
         int wateringFrequency = 5;
         plant.setId(id);
-        plant.setName(name);
+        plant.setName(plantName);
         plant.setWateringFrequency(wateringFrequency);
         plant.setIndividualName(individualName);
 
-        given(plantService.findPlantByName(name)).willReturn(plant);
+        given(plantService.findPlantByName(plantName)).willReturn(plant);
 //        when
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/flowers/{name}", name)
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/flowers")
+                        .param("name", plantName)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(plant)))
 //        then
@@ -139,10 +142,35 @@ public class PlantControllerTest {
 
         given(plantService.findPlantByName(plantName)).willReturn(plant);
 //        when
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/flowers/{name}", name)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(plant)))
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/flowers/")
+                        .param("name", plantName)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(plant)))
 //        then
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
+
+    @Test
+    void shouldReturnPlantByWateringFrequency() throws Exception {
+//        given
+        Plant plant = new Plant();
+        int id = 1;
+        String plantName = "rose";
+        String individualName = "rose1";
+        int wateringFrequency = 5;
+        plant.setId(id);
+        plant.setName(plantName);
+        plant.setWateringFrequency(wateringFrequency);
+        plant.setIndividualName(individualName);
+
+        List<Plant> plants = List.of(plant);
+        given(plantService.findPlantByWateringFrequency(wateringFrequency)).willReturn(plants);
+//        when
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/flowers/{wateringFrequency}", wateringFrequency)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(plants)))
+//        then
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
 }
