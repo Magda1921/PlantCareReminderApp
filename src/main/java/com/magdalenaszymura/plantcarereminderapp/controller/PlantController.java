@@ -7,6 +7,7 @@ import com.magdalenaszymura.plantcarereminderapp.service.PlantService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/")
@@ -22,9 +23,9 @@ public class PlantController {
         plantService.addFlower(plant, account);
     }
 
-    @GetMapping("/flowers/{name}")
+    @GetMapping("/flowers")
     @ResponseBody
-    ResponseEntity<Plant> findPlantByName(@PathVariable String name) {
+    ResponseEntity<Plant> getPlantByName(@RequestParam String name) {
         Plant plant = plantService.findPlantByName(name);
 
         if (plant != null) {
@@ -34,5 +35,11 @@ public class PlantController {
         }
     }
 
+    @GetMapping("/flowers/{wateringFrequency}")
+    @ResponseBody
+    ResponseEntity<List<Plant>> findPlantByWateringFrequency(@PathVariable int wateringFrequency) {
+        List<Plant> plants = plantService.findPlantByWateringFrequency(wateringFrequency);
 
+        return ResponseEntity.ok(plants);
+    }
 }

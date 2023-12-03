@@ -16,7 +16,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -65,6 +67,83 @@ public class IntegrationTest {
 //         then
                 .andExpect(status().isOk());
         List<String> plants = plantRepository.findAll()
+                .stream()
+                .map(Plant::getName)
+                .filter("rose"::equals)
+                .collect(Collectors.toList());
+        assertThat(plants).hasSize(1);
+    }
+
+    @Test
+    void shouldGetPlantByPlantName() throws Exception {
+//        given
+        Plant plant = new Plant();
+        int id = 1;
+        String name = "rose";
+        String individualName = "rose1";
+        int wateringFrequency = 5;
+        plant.setId(id);
+        plant.setName(name);
+        plant.setWateringFrequency(wateringFrequency);
+        plant.setIndividualName(individualName);
+
+        Account account = new Account();
+        long accountId = 1;
+        String userName = "Maria";
+        String userEmail = "maria@lp.com";
+        String password = "password";
+        account.setId(accountId);
+        account.setUserName(userName);
+        account.setEmail(userEmail);
+        account.setPassword(password);
+
+        accountRepository.save(account);
+
+        plant.setAccount(account);
+        plantRepository.save(plant);
+//        when
+        this.mvc.perform(get("/flowers")
+                        .param("name", name))
+                .andDo(print())
+//        then
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void shouldGetListOfPlantsByWateringFrequently() throws Exception {
+//        given
+        Plant plant = new Plant();
+        int id = 1;
+        String name = "rose";
+        String individualName = "rose1";
+        int wateringFrequency = 5;
+        plant.setId(id);
+        plant.setName(name);
+        plant.setWateringFrequency(wateringFrequency);
+        plant.setIndividualName(individualName);
+
+        Account account = new Account();
+        long accountId = 1;
+        String userName = "Maria";
+        String userEmail = "maria@lp.com";
+        String password = "password";
+        account.setId(accountId);
+        account.setUserName(userName);
+        account.setEmail(userEmail);
+        account.setPassword(password);
+
+        accountRepository.save(account);
+
+        plant.setAccount(account);
+        plantRepository.save(plant);
+//        when
+        this.mvc
+                .perform(get("/flowers/{wateringFrequency}", wateringFrequency))
+                .andDo(print())
+//        then
+                .andExpect(status().isOk());
+
+        List<String> plants = plantRepository.getPlantByWateringFrequency(wateringFrequency)
                 .stream()
                 .map(Plant::getName)
                 .filter("rose"::equals)
