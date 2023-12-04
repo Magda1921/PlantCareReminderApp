@@ -42,4 +42,9 @@ public class PlantController {
 
         return ResponseEntity.ok(plants);
     }
+    @DeleteMapping("/flowers")
+    @ResponseBody
+    void deletePlant(@RequestBody Plant plant) {
+        plantService.deletePlant(plant);
+    }
 }
