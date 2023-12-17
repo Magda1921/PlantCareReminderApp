@@ -27,4 +27,7 @@ public class PlantService {
         List<Plant> plants = plantRepository.getPlantByWateringFrequency(wateringFrequency);
         return plants;
     }
+    public void deletePlant(Plant plant) {
+        plantRepository.delete(plant);
+    }
 }

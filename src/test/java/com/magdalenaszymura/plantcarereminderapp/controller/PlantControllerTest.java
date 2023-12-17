@@ -173,4 +173,24 @@ public class PlantControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
+    @Test
+    void shouldDeletePlantFromDb() throws Exception {
+//        given
+        Plant plant = new Plant();
+        int id = 1;
+        String plantName = "rose";
+        String individualName = "rose1";
+        int wateringFrequency = 5;
+        plant.setId(id);
+        plant.setName(plantName);
+        plant.setWateringFrequency(wateringFrequency);
+        plant.setIndividualName(individualName);
+//        when
+        mockMvc.perform(MockMvcRequestBuilders.delete("/flowers")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(plant))
+                        .accept(MediaType.APPLICATION_JSON))
+//        then
+                .andExpect(status().isOk());
+    }
 }
